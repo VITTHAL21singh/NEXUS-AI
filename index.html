@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retina 001 - Voice-Enabled AI Assistant</title>
+    <title>NEXUS AI - Voice-Enabled AI Assistant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="logo.jpg" type="image/jpg">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -16,47 +16,110 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: #fff;
+            background-color: #000000; /* Deep black background */
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
-        
-        /* ----------------------------------------------------- */
-        /* --- RESTORED BACKGROUND STYLES (NO MATRIX) --- */
-        /* ----------------------------------------------------- */
-        /* #matrixCanvas styles removed */
 
-        .ab {
-            position: fixed;
+        /* ----------------------------------------------------- */
+        /* --- NEW LIQUID BACKGROUND STYLES --- */
+        /* ----------------------------------------------------- */
+        
+        .background-container {
+            position: fixed; /* Fixed so it stays put while scrolling */
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2; /* Background video layer */
+            width: 100vw;
+            height: 100vh;
+            z-index: -2; /* Behind the dark overlay and content */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: contrast(110%) brightness(110%);
+            background-color: #000000;
             overflow: hidden;
         }
-        .cd {
+
+        /* Common Blob Styles */
+        .blob {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            /* RESTORED ORIGINAL BRIGHTNESS */
-            filter: brightness(1) blur(1px); 
+            border-radius: 50%;
+            filter: blur(40px); /* Softens the edges to look like light */
+            opacity: 0.8;
+            animation: morph 15s ease-in-out infinite alternate;
+            mix-blend-mode: screen; /* Creates the glowing intersection effect */
         }
+
+        /* Blob 1: The Left Magenta/Purple Shape */
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(180deg, #a800ff 0%, #5d00ff 100%);
+            top: -10%;
+            left: -10%;
+            animation-duration: 18s;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+
+        /* Blob 2: The Right Cyan/Blue Shape */
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(180deg, #00d4ff 0%, #0051ff 100%);
+            bottom: -10%;
+            right: -10%;
+            animation-duration: 20s;
+            animation-direction: alternate-reverse;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        /* Blob 3: The Center/Top Accent */
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #ff00d4 0%, #9d00ff 100%);
+            top: 20%;
+            right: 30%;
+            opacity: 0.6;
+            animation-duration: 25s;
+            border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+        }
+
+        /* Morphing Animation */
+        @keyframes morph {
+            0% {
+                border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                border-radius: 70% 30% 30% 70% / 50% 20% 80% 50%;
+                transform: translate(30px, -50px) rotate(10deg);
+            }
+            66% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                transform: translate(-20px, 20px) rotate(-5deg);
+            }
+            100% {
+                border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
+
+        /* ----------------------------------------------------- */
+        /* --- END BACKGROUND STYLES --- */
+        /* ----------------------------------------------------- */
+
         .ef {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            /* Keeps text readable over the blobs */
             background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%);
-            z-index: -1; /* Overlay layer */
+            z-index: -1; 
+            pointer-events: none; /* Lets you click through the overlay */
         }
-        /* ----------------------------------------------------- */
-
 
         .gh {
             height: 100vh;
@@ -350,7 +413,7 @@
             margin: 1rem 0;
             padding: 1rem 1.5rem;
             border-radius: 15px;
-            max-width: 90%; /* Increased max-width for better display of tables/code blocks */
+            max-width: 90%; 
             animation: messageSlide 0.3s ease;
         }
         .yz1 > *:first-child {
@@ -360,7 +423,6 @@
             margin-bottom: 0;
         }
         
-        /* Markdown formatting for code blocks and tables */
         .yz1 pre {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 0.75rem;
@@ -408,7 +470,6 @@
             text-align: right;
         }
         .yz1.user p, .yz1.user li, .yz1.user h1, .yz1.user h2, .yz1.user h3 {
-             /* Reset text alignment for markdown elements inside user message boxes */
             text-align: left;
         }
         .ab2 {
@@ -791,15 +852,14 @@
 </head>
 <body>
     
-    <!-- REMOVED: MATRIX CANVAS -->
-
-    <div class="ab">
-        <!-- ADDED ID 'bgVideo' for JavaScript access and autoplay fix -->
-        <video class="cd" autoplay muted loop id="bgVideo">
-            <source src="https://youtu.be/Jox6R5-rIH0" type="video/mp4">
-        </video>
+    <div class="background-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
+
     <div class="ef"></div>
+
     <div class="ij2" id="ij2">
         <i class="fas fa-microphone"></i>
         <span>Listening...</span>
@@ -1014,7 +1074,6 @@
         const st1 = document.getElementById('st1');
         const mn1 = document.getElementById('mn1');
         const op1 = document.getElementById('op1');
-        const bgVideo = document.getElementById('bgVideo'); // Get the video element
 
         function setAssistantState(state) {
             gh1.classList.remove('listening', 'thinking', 'speaking');
@@ -1144,24 +1203,19 @@
         const wx1 = document.getElementById('wx1');
         const cd2 = document.getElementById('cd2');
         
-        // --- START MARKDOWN RENDERING FIX ---
         function addMessage(message, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = 'yz1 ' + (isUser ? 'user' : 'bot');
             
             if (isUser) {
-                // User messages are displayed as plain text
                 messageDiv.textContent = message;
             } else {
-                // BOT messages are processed from Markdown to HTML using marked.js
-                // This allows for tables, bolding, code blocks, and lists to be rendered correctly.
                 messageDiv.innerHTML = marked.parse(message);
             }
 
             wx1.appendChild(messageDiv);
             wx1.scrollTop = wx1.scrollHeight;
         }
-        // --- END MARKDOWN RENDERING FIX ---
 
         function addBotMessage(message) {
             setAssistantState('thinking');
@@ -1177,7 +1231,6 @@ async function sendMessage() {
         cd2.value = '';
         setAssistantState('thinking');
         try {
-            // Fetch URL uses a relative path to target the Flask server
             const res = await fetch("/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -1325,23 +1378,10 @@ async function sendMessage() {
             }
         }
         window.addEventListener('load', () => {
-             // ATTEMPT TO AUTOPLAY VIDEO ON PAGE LOAD (FIXED)
-            if (bgVideo) {
-                bgVideo.play().catch(error => {
-                    console.warn("Video auto-play failed (browser restriction). Ensure the video has no audio or is muted.", error);
-                });
-            }
-
             setTimeout(() => {
                 speak("Good day. I am NEXUS, Network Expert Xenon Understanding Solutions. I can assist you with cybersecurity, ethical hacking, and programming questions. Shall we begin?");
             }, 2000);
         });
-
-
-        // -----------------------------------------------------
-        // --- REMOVED JAVASCRIPT FOR MATRIX RAIN EFFECT ---
-        // -----------------------------------------------------
-
     </script>
 </body>
 </html>
