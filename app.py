@@ -15,7 +15,7 @@ CORS(app, resources={
 })
 
 # Configure Google Gemini API
-genai.configure(api_key="AIzaSyDxvQ2d-5kwJ_nyso6qJD8r1ZImPFnIXR0")
+genai.configure(api_key="AIzaSyC8FHAmEtBZYZUHV4j0sFILQpTZ0BLf3NI")
 
 @app.route("/chat", methods=["POST", "OPTIONS"])
 def chat():
