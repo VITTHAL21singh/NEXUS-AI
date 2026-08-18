@@ -72,7 +72,7 @@ Remember: You help users understand security to protect systems, not compromise 
 
         # Initialize the Gemini model with system instructions
         model = genai.GenerativeModel(
-            "gemma-4-2b-it",
+            "gemini-2.5-flash",
             generation_config={
                 "temperature": 0.7,
                 "top_p": 0.8,
